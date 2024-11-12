@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Sign-In</title>
+</head>
+<body>
+    <!-- Google Sign-In товчийг байрлуулах -->
+    <div id="g_id_onload"
+         data-client_id="Таны_CLIENT_ID_ЭНД_БАЙРЛАНА"
+         data-callback="handleCredentialResponse">
+    </div>
+    <div class="g_id_signin" data-type="standard"></div>
+
+    <!-- Google Identity Services JavaScript SDK оруулах -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <!-- Нэвтрэхэд авсан мэдээллийг харуулах -->
+    <div id="user-info" style="display: none;">
+        <h3>Хэрэглэгчийн мэдээлэл:</h3>
+        <p><strong>Нэр:</strong> <span id="user-name"></span></p>
+        <p><strong>Имэйл:</strong> <span id="user-email"></span></p>
+        <img id="user-image" alt="User Image">
+    </div>
+
+    <script>
+        // Google-ээс ирсэн хариуг боловсруулах функц
+        function handleCredentialResponse(response) {
+            // JSON Web Token (JWT)-ийг тайлан авна
+            const data = jwt_decode(response.credential);
+            
+            // Хэрэглэгчийн мэдээллийг харуулах
+            document.getElementById("user-name").textContent = data.name;
+            document.getElementById("user-email").textContent = data.email;
+            document.getElementById("user-image").src = data.picture;
+            document.getElementById("user-info").style.display = "block";
+        }
+
+        // JWT тайлахад зориулсан сан (cdnjs-ээс татаж болно)
+        function jwt_decode(token) {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            return JSON.parse(jsonPayload);
+        }
+    </script>
+</body>
+</html>
