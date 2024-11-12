@@ -8,7 +8,7 @@
 <body>
     <!-- Google Sign-In товчийг байрлуулах -->
     <div id="g_id_onload"
-         data-client_id="Таны_CLIENT_ID_ЭНД_БАЙРЛАНА"
+         data-client_id="809609563478-iv4v2p0crs7vor1d0cdp0lbts0bjpkmo.apps.googleusercontent.com"
          data-callback="handleCredentialResponse">
     </div>
     <div class="g_id_signin" data-type="standard"></div>
@@ -31,7 +31,7 @@
             const data = jwt_decode(response.credential);
             
             // Хэрэглэгчийн мэдээллийг харуулах
-            document.getElementById("user-name").textContent = data.name;
+            document.getElementById("user-name").textContent = data.   name;
             document.getElementById("user-email").textContent = data.email;
             document.getElementById("user-image").src = data.picture;
             document.getElementById("user-info").style.display = "block";
