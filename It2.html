@@ -4,6 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Google Sign-In</title>
+    <!-- Google Identity Services JavaScript SDK -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+        /* Хэрэглэгчийн мэдээлэл харуулах хэсгийн дизайн */
+        #user-info {
+            display: none;
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            max-width: 300px;
+            font-family: Arial, sans-serif;
+        }
+        #user-image {
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+        }
+    </style>
 </head>
 <body>
     <!-- Google Sign-In товчийг байрлуулах -->
@@ -14,11 +33,8 @@
     </div>
     <div class="g_id_signin" data-type="standard"></div>
 
-    <!-- Google Identity Services JavaScript SDK оруулах -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-
-    <!-- Нэвтрэхэд авсан мэдээллийг харуулах -->
-    <div id="user-info" style="display: none;">
+    <!-- Нэвтэрсэн хэрэглэгчийн мэдээллийг харуулах -->
+    <div id="user-info">
         <h3>Хэрэглэгчийн мэдээлэл:</h3>
         <p><strong>Нэр:</strong> <span id="user-name"></span></p>
         <p><strong>Имэйл:</strong> <span id="user-email"></span></p>
@@ -28,24 +44,35 @@
     <script>
         // Google-ээс ирсэн хариуг боловсруулах функц
         function handleCredentialResponse(response) {
+            console.log("JWT:", response.credential);  // Хариуг шалгах
+
             // JSON Web Token (JWT)-ийг тайлан авна
             const data = jwt_decode(response.credential);
             
             // Хэрэглэгчийн мэдээллийг харуулах
-            document.getElementById("user-name").textContent = data.name;
-            document.getElementById("user-email").textContent = data.email;
-            document.getElementById("user-image").src = data.picture;
-            document.getElementById("user-info").style.display = "block";
+            if (data) {
+                document.getElementById("user-name").textContent = data.name || "Нэр байхгүй";
+                document.getElementById("user-email").textContent = data.email || "Имэйл байхгүй";
+                document.getElementById("user-image").src = data.picture || "";
+                document.getElementById("user-info").style.display = "block";
+            } else {
+                console.error("JWT тайлахад алдаа гарлаа");
+            }
         }
 
-        // JWT тайлахад зориулсан сан (cdnjs-ээс татаж болно)
+        // JWT тайлах функц
         function jwt_decode(token) {
             const base64Url = token.split('.')[1];
             const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
-            return JSON.parse(jsonPayload);
+            try {
+                const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+                return JSON.parse(jsonPayload);
+            } catch (e) {
+                console.error("JWT тайлахад алдаа гарлаа: ", e);
+                return null;
+            }
         }
     </script>
 </body>
