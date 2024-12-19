@@ -3,11 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Sign-In</title>
-    <!-- Google Identity Services JavaScript SDK -->
+    <title>Google Sign-In with Weather Info</title>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <style>
-        /* Хэрэглэгчийн мэдээлэл харуулах хэсгийн дизайн */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f8ff;
+        }
         #user-info {
             display: none;
             margin-top: 20px;
@@ -15,24 +24,37 @@
             padding: 10px;
             border-radius: 5px;
             max-width: 300px;
-            font-family: Arial, sans-serif;
+            text-align: center;
         }
         #user-image {
             border-radius: 50%;
             width: 50px;
             height: 50px;
         }
+        .weather-container {
+            margin-top: 20px;
+            text-align: center;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            max-width: 400px;
+        }
+        input {
+            padding: 5px;
+            margin: 10px 0;
+        }
     </style>
 </head>
 <body>
-    <!-- Google Sign-In товчийг байрлуулах -->
+    <!-- Google Sign-In -->
     <div id="g_id_onload"
          data-client_id="823793278649-b2na90rpk2ujtkc75njgippvve7jsl65.apps.googleusercontent.com"
          data-callback="handleCredentialResponse">
     </div>
     <div class="g_id_signin" data-type="standard"></div>
 
-    <!-- Нэвтэрсэн хэрэглэгчийн мэдээллийг харуулах -->
+    <!-- Хэрэглэгчийн мэдээллийг харуулах -->
     <div id="user-info">
         <h3>Хэрэглэгчийн мэдээлэл:</h3>
         <p><strong>Нэр:</strong> <span id="user-name"></span></p>
@@ -40,20 +62,31 @@
         <img id="user-image" alt="User Image">
     </div>
 
-    <script>
-        // Google-ээс ирсэн хариуг боловсруулах функц
-        function handleCredentialResponse(response) {
-            console.log("JWT:", response.credential);  // Хариуг шалгах
+    <!-- Цаг агаарын мэдээлэл авах хэсэг -->
+    <div class="weather-container" id="weather-section" style="display: none;">
+        <h1>Цаг агаарын мэдээлэл</h1>
+        <input type="text" id="cityInput" placeholder="Хотын нэрээ оруулна уу" />
+        <button onclick="fetchWeather()">Мэдээлэл авах</button>
+        <p id="temperature">Температур: -</p>
+        <p id="description">Тайлбар: -</p>
+        <p id="humidity">Чийгшил: -</p>
+        <p id="wind-speed">Салхины хурд: -</p>
+    </div>
 
-            // JSON Web Token (JWT)-ийг тайлан авна
+    <script>
+        const apiKey = 'ac7fce0d92302b0ba3c698010e2e45d5'; // OpenWeatherMap API key
+
+        // Google Sign-In-ийн хариуг боловсруулах
+        function handleCredentialResponse(response) {
+            console.log("JWT:", response.credential);
             const data = jwt_decode(response.credential);
-            
-            // Хэрэглэгчийн мэдээллийг харуулах
+
             if (data) {
                 document.getElementById("user-name").textContent = data.name || "Нэр байхгүй";
                 document.getElementById("user-email").textContent = data.email || "Имэйл байхгүй";
                 document.getElementById("user-image").src = data.picture || "";
                 document.getElementById("user-info").style.display = "block";
+                document.getElementById("weather-section").style.display = "block";
             } else {
                 console.error("JWT тайлахад алдаа гарлаа");
             }
@@ -71,6 +104,26 @@
             } catch (e) {
                 console.error("JWT тайлахад алдаа гарлаа: ", e);
                 return null;
+            }
+        }
+
+        // Цаг агаарын мэдээллийг авах функц
+        async function fetchWeather() {
+            const city = document.getElementById('cityInput').value || 'Ulaanbaatar';
+            const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+                const data = await response.json();
+                document.getElementById('temperature').textContent = `Температур: ${data.main.temp}°C`;
+                document.getElementById('description').textContent = `Тайлбар: ${data.weather[0].description}`;
+                document.getElementById('humidity').textContent = `Чийгшил: ${data.main.humidity}%`;
+                document.getElementById('wind-speed').textContent = `Салхины хурд: ${data.wind.speed} м/с`;
+            } catch (error) {
+                document.getElementById('temperature').textContent = 'Мэдээлэл авахад алдаа гарлаа';
+                console.error('Error:', error);
             }
         }
     </script>
