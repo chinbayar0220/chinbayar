@@ -127,11 +127,11 @@
         </header>
 
         <section class="profile-info">
-            <h2>Миний Профайл</h2>
+            <h2>💖</h2>
             <img src="https://chinbayar.bayanbat.com/chinbayar.jpg" alt="">
             <p><strong>Нэр:</strong> Chinbayar</p>
             <p><strong>Нас:</strong> 19</p>
-            <p><strong>Мэргэжил:</strong> Вэб хөгжүүлэгч & Software engineer</p>
+            <p><strong>Мэргэжил:</strong> web developer & Software engineer</p>
             <p><strong>Hobby:</strong> hulgana tejeeh </p>
             <p><strong>Instagram:</strong> <a href="https://instagram.com/ch_nbayr" target="_blank">@ch_nbayr</a></p>
         </section>
@@ -149,8 +149,6 @@
                 <label for="instagram">Instagram:</label>
                 <input type="text" id="instagram" name="instagram" required>
 
-                <label for="photo">Зураг оруулахгүй байсан ч болноо гэшш :</label>
-                <input type="file" id="photo" name="photo" accept="image/*">
 
                 <button type="submit">Бүртгүүлэх 📝</button>
             </form>
@@ -184,7 +182,6 @@
             const name = document.getElementById('name').value;
             const age = document.getElementById('age').value;
             const instagram = document.getElementById('instagram').value;
-            const photo = document.getElementById('photo').files[0];
 
             const userList = JSON.parse(localStorage.getItem('users')) || [];
 
