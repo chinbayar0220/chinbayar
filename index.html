@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #ff4081; /* Улаан background */
+            background-color: #ff4081; /* Улаан өнгө */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -38,13 +38,13 @@
         }
 
         header h1 {
-            color: #ff4081; /* Улаан өнгө */
+            color: #ff4081;
             font-size: 24px;
         }
 
         h2 {
             font-size: 20px;
-            color: #fff; /* Бүх heading-ийг цагаан болгох */
+            color: #333;
             margin-bottom: 10px;
         }
 
@@ -62,7 +62,7 @@
         .profile-info p {
             font-size: 18px;
             margin-bottom: 10px;
-            color: #fff; /* Бүх мэдээллийн текстийг цагаан болгох */
+            color: #555;
         }
 
         form {
@@ -73,7 +73,7 @@
 
         label {
             margin-bottom: 8px;
-            color: #fff; /* Label-ийн текстийг цагаан болгох */
+            color: #555;
         }
 
         input {
@@ -105,16 +105,15 @@
             left: 20px;
             bottom: 20px;
             width: 200px;
-            background-color: #ffffff; /* Белгээ цагаан өнгөтэй болгох */
+            background-color: #ffffff;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 10px;
-            font-size: 10px; /* Бүртгүүлсэн мэдээллийг илүү жижиглэх */
-            color: #333; /* Текстийг хар өнгөтэй болгох */
+            font-size: 12px;
         }
 
         .registered-info h2 {
-            font-size: 14px;
+            font-size: 16px;
             margin-bottom: 10px;
         }
 
@@ -126,11 +125,11 @@
         }
 
         .registered-info ul li {
-            background: #f1f1f1; /* Бүртгүүлсэн хүмүүсийн мэдээллийн background */
+            background: #f1f1f1;
             margin: 5px 0;
             padding: 5px;
             border-radius: 5px;
-            color: #333; /* Текстийн өнгийг хар болгох */
+            color: #333;
         }
 
         .registered-info button {
@@ -201,4 +200,36 @@
                 age,
                 instagram,
                 photo: photo ? URL.createObjectURL(photo) : null
-        
+            };
+
+            userList.push(user);
+            localStorage.setItem('users', JSON.stringify(userList));
+
+            document.getElementById('profile-form').reset();
+            alert('Бүртгэл амжилттай! 🎉❤️');
+        });
+
+        // Бүртгүүлсэн хүмүүсийн мэдээллийг харуулах функц
+        document.getElementById('load-data').addEventListener('click', function () {
+            const userList = JSON.parse(localStorage.getItem('users')) || [];
+            const userListElement = document.getElementById('user-list');
+            userListElement.innerHTML = '';
+
+            userList.forEach(user => {
+                const userItem = document.createElement('li');
+                userItem.innerHTML = `
+                    <strong>${user.name}</strong> (${user.age} нас)<br>
+                    Instagram: <a href="https://instagram.com/${user.instagram}" target="_blank">@${user.instagram}</a><br>
+                    ${user.photo ? `<img src="${user.photo}" alt="Фото" style="width: 50px; border-radius: 5px;">` : ''}
+                `;
+                userListElement.appendChild(userItem);
+            });
+
+            if (userList.length === 0) {
+                userListElement.innerHTML = '<li>Бүртгүүлсэн мэдээлэл байхгүй байна.</li>';
+            }
+        });
+    </script>
+</body>
+</html>
+    
