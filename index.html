@@ -18,6 +18,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            position: relative;
         }
 
         .container {
@@ -116,6 +117,20 @@
 
         .registered-info {
             display: none;
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            width: 200px;  /* Жижиглэх */
+            background: rgba(255, 255, 255, 0.9); /* Өнгийг тодруулж харагдуулна */
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-size: 14px;  /* Жижиглэх */
+        }
+
+        .registered-info ul {
+            max-height: 150px;
+            overflow-y: auto;
         }
     </style>
 </head>
