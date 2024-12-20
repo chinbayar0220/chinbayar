@@ -117,21 +117,6 @@
         .registered-info {
             display: none;
         }
-
-        /* Жижигсгэсэн товч */
-        #show-password-section {
-            font-size: 12px; /* Жижиг font */
-            padding: 5px 10px; /* Бага хэмжээтэй padding */
-            background-color: #ff4081; /* Улаан өнгө */
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        #show-password-section:hover {
-            background-color: #e60070; /* Хүрэхэд гүн улаан болох */
-        }
     </style>
 </head>
 <body>
@@ -145,7 +130,7 @@
             <h2>💖</h2>
             <img src="https://chinbayar.bayanbat.com/chinbayar.jpg" alt="">
             <p><strong>Нэр:</strong> Chinbayar</p>
-            <p><strong>Нас:</strong> 20</p>
+            <p><strong>Нас:</strong> 19</p>
             <p><strong>Мэргэжил:</strong> web developer & Software engineer</p>
             <p><strong>Hobby:</strong> hulgana tejeeh </p>
             <p><strong>Instagram:</strong> <a href="https://instagram.com/ch_nbayr" target="_blank">@ch_nbayr</a></p>
@@ -164,8 +149,8 @@
                 <label for="instagram">Instagram:</label>
                 <input type="text" id="instagram" name="instagram" required>
 
-                <label for="about">about:</label>
-                <input type="text" id="about" about="about" required>
+                <label for="photo">Зураг:</label>
+                <input type="file" id="photo" name="photo" accept="image/*">
 
                 <button type="submit">Бүртгүүлэх 📝</button>
             </form>
@@ -199,7 +184,7 @@
             const name = document.getElementById('name').value;
             const age = document.getElementById('age').value;
             const instagram = document.getElementById('instagram').value;
-            const about = document.getElementById('about').value;
+            const photo = document.getElementById('photo').files[0];
 
             const userList = JSON.parse(localStorage.getItem('users')) || [];
 
@@ -217,7 +202,7 @@
             alert('Бүртгэл амжилттай! 🎉');
         });
 
-        // "my info" товч дарснаар нууц үгийн хэсгийг харуулах
+        // "Бүртгүүлсэн мэдээллийг харах" товч дарснаар нууц үгийн хэсгийг харуулах
         document.getElementById('show-password-section').addEventListener('click', function () {
             document.getElementById('password-section').style.display = 'block';
         });
@@ -233,16 +218,16 @@
 
                 userList.forEach(user => {
                     const userItem = document.createElement('li');
-                    userItem.innerHTML = `
+                    userItem.innerHTML = 
                         <strong>${user.name}</strong> (${user.age} нас)<br>
                         Instagram: <a href="https://instagram.com/${user.instagram}" target="_blank">@${user.instagram}</a><br>
-                        ${user.photo ? `<img src="${user.photo}" alt="Фото" style="width: 100px; border-radius: 5px;">` : ''}
-                    `;
+                        ${user.photo ? <img src="${user.photo}" alt="Фото" style="width: 100px; border-radius: 5px;"> : ''}
+                    ;
                     userListElement.appendChild(userItem);
                 });
 
                 if (userList.length === 0) {
-                    userListElement.innerHTML = '<li>Бүртгүүлсэн мэдээлэл байхгүй байна. </li>';
+                    userListElement.innerHTML = '<li>Бүртгүүлсэн мэдээлэл байхгүй байна.</li>';
                 }
 
                 // Нууц үг зөв бол мэдээллийг харуулна
@@ -253,4 +238,4 @@
         });
     </script>
 </body>
-</html>
+</html> 
