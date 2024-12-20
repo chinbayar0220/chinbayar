@@ -13,13 +13,12 @@
 
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #ff4081; /* Улаан өнгө */
+            background-color: #f8f9fa;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             position: relative;
-            color: #fff; /* Текстийг цагаан болгох */
         }
 
         .container {
@@ -29,7 +28,6 @@
             width: 80%;
             max-width: 600px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            color: #333; /* Бага хэсгийн текстийг харандаа өнгөтэй болгох */
         }
 
         header {
@@ -143,13 +141,13 @@
     <div class="container">
         <!-- Таны мэдээлэл -->
         <header>
-            <h1>Болзооны Вебсайт ❤️</h1>
+            <h1>Болзооны Вебсайт 💖</h1>
         </header>
 
         <section class="profile-info">
-            <h2>Миний Профайл ❤️</h2>
+            <h2>Миний Профайл</h2>
             <img src="https://via.placeholder.com/150" alt="Таны зураг">
-            <p><strong>Нэр:</strong> Таныхан Чимэг ❤️</p>
+            <p><strong>Нэр:</strong> Таныхан Чимэг</p>
             <p><strong>Нас:</strong> 25</p>
             <p><strong>Мэргэжил:</strong> Вэб хөгжүүлэгч</p>
             <p><strong>Instagram:</strong> <a href="https://instagram.com/tanyhan" target="_blank">@tanyhan</a></p>
@@ -157,7 +155,7 @@
 
         <!-- Бүртгэлийн хэсэг -->
         <section class="profile">
-            <h2>Таны Профайл бүртгүүлэх ❤️</h2>
+            <h2>Таны Профайл бүртгүүлэх</h2>
             <form id="profile-form">
                 <label for="name">Нэр:</label>
                 <input type="text" id="name" name="name" required>
@@ -171,16 +169,16 @@
                 <label for="photo">Зураг:</label>
                 <input type="file" id="photo" name="photo" accept="image/*">
 
-                <button type="submit">Бүртгүүлэх 📝❤️</button>
+                <button type="submit">Бүртгүүлэх 📝</button>
             </form>
         </section>
     </div>
 
     <!-- Бүртгүүлсэн хүмүүсийн мэдээлэл -->
     <section class="registered-info">
-        <h2>Бүртгүүлсэн хүмүүсийн мэдээлэл ❤️:</h2>
+        <h2>Бүртгүүлсэн хүмүүсийн мэдээлэл:</h2>
         <ul id="user-list"></ul>
-        <button id="load-data">Бүртгүүлсэн мэдээллийг харах 📋❤️</button>
+        <button id="load-data">Бүртгүүлсэн мэдээллийг харах 📋</button>
     </section>
 
     <script>
@@ -206,7 +204,7 @@
             localStorage.setItem('users', JSON.stringify(userList));
 
             document.getElementById('profile-form').reset();
-            alert('Бүртгэл амжилттай! 🎉❤️');
+            alert('Бүртгэл амжилттай! 🎉');
         });
 
         // Бүртгүүлсэн хүмүүсийн мэдээллийг харуулах функц
@@ -232,4 +230,3 @@
     </script>
 </body>
 </html>
-    
