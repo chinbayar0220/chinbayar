@@ -4,7 +4,96 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Болзооны Вебсайт</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            color: #ff4081;
+            font-size: 24px;
+        }
+
+        h2 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        input {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 12px;
+            background-color: #ff4081;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #e60073;
+        }
+
+        .registered-info {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            background: #f1f1f1;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -38,6 +127,50 @@
         </section>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        document.getElementById('profile-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const instagram = document.getElementById('instagram').value;
+            const photo = document.getElementById('photo').files[0];
+
+            const userList = JSON.parse(localStorage.getItem('users')) || [];
+
+            const user = {
+                name,
+                age,
+                instagram,
+                photo: photo ? URL.createObjectURL(photo) : null
+            };
+
+            userList.push(user);
+            localStorage.setItem('users', JSON.stringify(userList));
+
+            document.getElementById('profile-form').reset();
+            alert('Бүртгэл амжилттай! 🎉');
+        });
+
+        document.getElementById('load-data').addEventListener('click', function () {
+            const userList = JSON.parse(localStorage.getItem('users')) || [];
+            const userListElement = document.getElementById('user-list');
+            userListElement.innerHTML = '';
+
+            userList.forEach(user => {
+                const userItem = document.createElement('li');
+                userItem.innerHTML = `
+                    <strong>${user.name}</strong> (${user.age} нас)<br>
+                    Instagram: <a href="https://instagram.com/${user.instagram}" target="_blank">@${user.instagram}</a><br>
+                    ${user.photo ? `<img src="${user.photo}" alt="Фото" style="width: 100px; border-radius: 5px;">` : ''}
+                `;
+                userListElement.appendChild(userItem);
+            });
+
+            if (userList.length === 0) {
+                userListElement.innerHTML = '<li>Бүртгүүлсэн мэдээлэл байхгүй байна.</li>';
+            }
+        });
+    </script>
 </body>
 </html>
