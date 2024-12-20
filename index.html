@@ -93,7 +93,7 @@
         }
 
         button:hover {
-            background-color: #e60073; /* Хүрэхэд гүн улаан болох */
+            background-color: #e60070; /* Хүрэхэд гүн улаан болох */
         }
 
         ul {
@@ -154,16 +154,16 @@
 
         <!-- Нууц үг оруулах хэсэг -->
         <section class="password-section">
+            <h2>Бүртгүүлсэн мэдээллийг харах</h2>
             <label for="password">Нууц үг:</label>
-            <input type="password" id="password" name="password" required>
-            <button id="verify-password">Нууц үг шалгах 🔒</button>
+            <input type="password" id="password" placeholder="Нууц үгээ оруулна уу">
+            <button id="load-data">Харах 📋</button>
         </section>
 
         <!-- Бүртгүүлсэн хүмүүсийн мэдээлэл -->
         <section class="registered-info">
             <h2>Бүртгүүлсэн хүмүүсийн мэдээлэл:</h2>
             <ul id="user-list"></ul>
-            <button id="load-data">Бүртгүүлсэн мэдээллийг харах 📋</button>
         </section>
     </div>
 
@@ -193,40 +193,29 @@
             alert('Бүртгэл амжилттай! 🎉');
         });
 
-        // Бүртгүүлсэн хүмүүсийн мэдээллийг харуулах функц
+        // Бүртгүүлсэн мэдээллийг харах функц
         document.getElementById('load-data').addEventListener('click', function () {
-            const userList = JSON.parse(localStorage.getItem('users')) || [];
-            const userListElement = document.getElementById('user-list');
-            userListElement.innerHTML = '';
-
-            userList.forEach(user => {
-                const userItem = document.createElement('li');
-                userItem.innerHTML = `
-                    <strong>${user.name}</strong> (${user.age} нас)<br>
-                    Instagram: <a href="https://instagram.com/${user.instagram}" target="_blank">@${user.instagram}</a><br>
-                    ${user.photo ? `<img src="${user.photo}" alt="Фото" style="width: 100px; border-radius: 5px;">` : ''}
-                `;
-                userListElement.appendChild(userItem);
-            });
-
-            if (userList.length === 0) {
-                userListElement.innerHTML = '<li>Бүртгүүлсэн мэдээлэл байхгүй байна.</li>';
-            }
-        });
-
-        // Нууц үг шалгах функц
-        document.getElementById('verify-password').addEventListener('click', function () {
             const password = document.getElementById('password').value;
+            if (password === '0220') {
+                const userList = JSON.parse(localStorage.getItem('users')) || [];
+                const userListElement = document.getElementById('user-list');
+                userListElement.innerHTML = '';
 
-            // Нууц үгийг шалгах (энэ нь өөрчлөгдөх боломжтой)
-            const correctPassword = '0220'; // Таны хүссэн нууц үгийг энд бичнэ үү
+                userList.forEach(user => {
+                    const userItem = document.createElement('li');
+                    userItem.innerHTML = `
+                        <strong>${user.name}</strong> (${user.age} нас)<br>
+                        Instagram: <a href="https://instagram.com/${user.instagram}" target="_blank">@${user.instagram}</a><br>
+                        ${user.photo ? `<img src="${user.photo}" alt="Фото" style="width: 100px; border-radius: 5px;">` : ''}
+                    `;
+                    userListElement.appendChild(userItem);
+                });
 
-            if (password === correctPassword) {
-                alert('Нууц үг зөв! 🎉');
-                document.getElementById('load-data').style.display = 'block'; // Бүртгүүлсэн мэдээлэл харуулах товчийг үзүүлнэ
+                if (userList.length === 0) {
+                    userListElement.innerHTML = '<li>Бүртгүүлсэн мэдээлэл байхгүй байна.</li>';
+                }
             } else {
-                alert('Нууц үг буруу байна! ❌');
-                document.getElementById('load-data').style.display = 'none'; // Бүртгүүлсэн мэдээлэл харах товчийг нуух
+                alert('Нууц үг буруу байна!');
             }
         });
     </script>
