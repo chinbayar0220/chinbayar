@@ -50,16 +50,15 @@
             margin-bottom: 30px;
         }
 
-        /* Adjustments for 5x smaller size */
         .profile-info img {
-            width: 30px; /* Reduced size */
+            width: 150px;
             border-radius: 50%;
-            margin-bottom: 5px;
+            margin-bottom: 15px;
         }
 
         .profile-info p {
-            font-size: 3px; /* Smaller text size */
-            margin-bottom: 2px;
+            font-size: 18px;
+            margin-bottom: 10px;
             color: #555;
         }
 
@@ -117,6 +116,21 @@
 
         .registered-info {
             display: none;
+        }
+
+        /* Жижигсгэсэн товч */
+        #show-password-section {
+            font-size: 12px; /* Жижиг font */
+            padding: 5px 10px; /* Бага хэмжээтэй padding */
+            background-color: #ff4081; /* Улаан өнгө */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #show-password-section:hover {
+            background-color: #e60070; /* Хүрэхэд гүн улаан болох */
         }
     </style>
 </head>
@@ -193,7 +207,7 @@
                 name,
                 age,
                 instagram,
-                about
+                photo: photo ? URL.createObjectURL(photo) : null
             };
 
             userList.push(user);
@@ -222,7 +236,7 @@
                     userItem.innerHTML = `
                         <strong>${user.name}</strong> (${user.age} нас)<br>
                         Instagram: <a href="https://instagram.com/${user.instagram}" target="_blank">@${user.instagram}</a><br>
-                        About: ${user.about}
+                        ${user.photo ? `<img src="${user.photo}" alt="Фото" style="width: 100px; border-radius: 5px;">` : ''}
                     `;
                     userListElement.appendChild(userItem);
                 });
@@ -231,4 +245,12 @@
                     userListElement.innerHTML = '<li>Бүртгүүлсэн мэдээлэл байхгүй байна.</li>';
                 }
 
-          
+                // Нууц үг зөв бол мэдээллийг харуулна
+                registeredInfoSection.style.display = 'block'; 
+            } else {
+                alert('Нууц үг буруу байна!');
+            }
+        });
+    </script>
+</body>
+</html>
