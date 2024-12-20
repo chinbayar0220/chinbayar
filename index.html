@@ -108,6 +108,11 @@
             border-radius: 8px;
             color: #333;
         }
+
+        .password-section {
+            margin-bottom: 15px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -121,7 +126,7 @@
             <h2>Миний Профайл</h2>
             <img src="https://chinbayar.bayanbat.com/chinbayar.jpg" alt="">
             <p><strong>Нэр:</strong> Chinbayar</p>
-            <p><strong>Нас:</strong>19 </p>
+            <p><strong>Нас:</strong> 19</p>
             <p><strong>Мэргэжил:</strong> Вэб хөгжүүлэгч & Software engineer</p>
             <p><strong>Hobby:</strong> hulgana tejeeh </p>
             <p><strong>Instagram:</strong> <a href="https://instagram.com/ch_nbayr" target="_blank">@ch_nbayr</a></p>
@@ -145,6 +150,13 @@
 
                 <button type="submit">Бүртгүүлэх 📝</button>
             </form>
+        </section>
+
+        <!-- Нууц үг оруулах хэсэг -->
+        <section class="password-section">
+            <label for="password">Нууц үг:</label>
+            <input type="password" id="password" name="password" required>
+            <button id="verify-password">Нууц үг шалгах 🔒</button>
         </section>
 
         <!-- Бүртгүүлсэн хүмүүсийн мэдээлэл -->
@@ -199,6 +211,22 @@
 
             if (userList.length === 0) {
                 userListElement.innerHTML = '<li>Бүртгүүлсэн мэдээлэл байхгүй байна.</li>';
+            }
+        });
+
+        // Нууц үг шалгах функц
+        document.getElementById('verify-password').addEventListener('click', function () {
+            const password = document.getElementById('password').value;
+
+            // Нууц үгийг шалгах (энэ нь өөрчлөгдөх боломжтой)
+            const correctPassword = '0220'; // Таны хүссэн нууц үгийг энд бичнэ үү
+
+            if (password === correctPassword) {
+                alert('Нууц үг зөв! 🎉');
+                document.getElementById('load-data').style.display = 'block'; // Бүртгүүлсэн мэдээлэл харуулах товчийг үзүүлнэ
+            } else {
+                alert('Нууц үг буруу байна! ❌');
+                document.getElementById('load-data').style.display = 'none'; // Бүртгүүлсэн мэдээлэл харах товчийг нуух
             }
         });
     </script>
