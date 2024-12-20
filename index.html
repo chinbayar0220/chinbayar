@@ -18,7 +18,6 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            position: relative;
         }
 
         .container {
@@ -97,43 +96,17 @@
             background-color: #e60073;
         }
 
-        /* Бүртгүүлсэн мэдээллийг жижиг болгох хэсэг */
-        .registered-info {
-            position: absolute;
-            left: 20px;
-            bottom: 20px;
-            width: 200px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 10px;
-            font-size: 12px;
-        }
-
-        .registered-info h2 {
-            font-size: 16px;
-            margin-bottom: 10px;
-        }
-
-        .registered-info ul {
+        ul {
             list-style-type: none;
             padding: 0;
-            max-height: 200px;
-            overflow-y: auto;
         }
 
-        .registered-info ul li {
+        ul li {
             background: #f1f1f1;
-            margin: 5px 0;
-            padding: 5px;
-            border-radius: 5px;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
             color: #333;
-        }
-
-        .registered-info button {
-            font-size: 12px;
-            padding: 8px;
-            margin-top: 10px;
         }
     </style>
 </head>
@@ -172,14 +145,14 @@
                 <button type="submit">Бүртгүүлэх 📝</button>
             </form>
         </section>
-    </div>
 
-    <!-- Бүртгүүлсэн хүмүүсийн мэдээлэл -->
-    <section class="registered-info">
-        <h2>Бүртгүүлсэн хүмүүсийн мэдээлэл:</h2>
-        <ul id="user-list"></ul>
-        <button id="load-data">Бүртгүүлсэн мэдээллийг харах 📋</button>
-    </section>
+        <!-- Бүртгүүлсэн хүмүүсийн мэдээлэл -->
+        <section class="registered-info">
+            <h2>Бүртгүүлсэн хүмүүсийн мэдээлэл:</h2>
+            <ul id="user-list"></ul>
+            <button id="load-data">Бүртгүүлсэн мэдээллийг харах 📋</button>
+        </section>
+    </div>
 
     <script>
         // Бүртгэлийн мэдээллийг хадгалах функц
@@ -218,7 +191,7 @@
                 userItem.innerHTML = `
                     <strong>${user.name}</strong> (${user.age} нас)<br>
                     Instagram: <a href="https://instagram.com/${user.instagram}" target="_blank">@${user.instagram}</a><br>
-                    ${user.photo ? `<img src="${user.photo}" alt="Фото" style="width: 50px; border-radius: 5px;">` : ''}
+                    ${user.photo ? `<img src="${user.photo}" alt="Фото" style="width: 100px; border-radius: 5px;">` : ''}
                 `;
                 userListElement.appendChild(userItem);
             });
