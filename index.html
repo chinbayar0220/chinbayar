@@ -156,9 +156,14 @@
             </form>
         </section>
 
-        <!-- Нууц үг оруулах хэсэг -->
+        <!-- Бүртгүүлсэн мэдээллийг харах товч -->
         <section class="password-section">
-            <h2>Бүртгүүлсэн мэдээллийг харах</h2>
+            <button id="show-password-section">Бүртгүүлсэн мэдээллийг харах</button>
+        </section>
+
+        <!-- Нууц үг оруулах хэсэг -->
+        <section id="password-section" style="display: none; text-align: center;">
+            <h2>Нууц үг оруулна уу</h2>
             <label for="password">Нууц үг:</label>
             <input type="password" id="password" placeholder="Нууц үгээ оруулна уу">
             <button id="load-data">Харах 📋</button>
@@ -195,6 +200,11 @@
 
             document.getElementById('profile-form').reset();
             alert('Бүртгэл амжилттай! 🎉');
+        });
+
+        // "Бүртгүүлсэн мэдээллийг харах" товч дарснаар нууц үгийн хэсгийг харуулах
+        document.getElementById('show-password-section').addEventListener('click', function () {
+            document.getElementById('password-section').style.display = 'block';
         });
 
         // Бүртгүүлсэн мэдээллийг харах функц
