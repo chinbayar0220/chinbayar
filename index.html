@@ -1,48 +1,79 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const fs = require('fs');
-
-const app = express();
-const PORT = 3000;
-
-// Middleware for parsing JSON and form data
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
-// Serve static files (e.g., HTML)
-app.use(express.static('public'));
-
-// Endpoint for registration
-app.post('/register', (req, res) => {
-    const { name, about, age } = req.body;
-
-    // Create a new user object
-    const newUser = { name, about, age };
-
-    // Read existing users from a file
-    fs.readFile('users.json', 'utf-8', (err, data) => {
-        if (err && err.code !== 'ENOENT') {
-            console.error('Error reading file:', err);
-            return res.status(500).send('Internal server error.');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бүртгүүлэх болон Нэвтрэх</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
         }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+        }
+        .container {
+            max-width: 500px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        input, textarea, button {
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Бүртгүүлэх болон Нэвтрэх</h1>
+</header>
 
-        // Parse existing users or initialize as an empty array
-        const users = data ? JSON.parse(data) : [];
-        users.push(newUser);
+<div class="container" id="register">
+    <h2>Хувийн мэдээллээ оруулна уу</h2>
+    <form action="/register" method="POST">
+        <input type="text" name="name" placeholder="Таны нэр" required>
+        <textarea name="about" placeholder="Өөрийнхөө талаар товч танилцуулга..." rows="4" required></textarea>
+        <input type="number" name="age" placeholder="Нас" required>
+        <button type="submit">Бүртгүүлэх</button>
+    </form>
+</div>
 
-        // Save updated users to the file
-        fs.writeFile('users.json', JSON.stringify(users, null, 2), (err) => {
-            if (err) {
-                console.error('Error writing file:', err);
-                return res.status(500).send('Error saving user.');
-            }
+<div class="container" id="login">
+    <h2>Мэдээлэл харах нэвтрэх</h2>
+    <form action="/login" method="POST">
+        <input type="password" name="password" placeholder="Нууц үг" required>
+        <button type="submit">Нэвтрэх</button>
+    </form>
+</div>
 
-            res.send('Бүртгэл амжилттай хийгдлээ!');
-        });
-    });
-});
-
-// Start the server
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+<footer>
+    <p>&copy; 2024 Таны Вебсайт. Бүх эрх хуулиар хамгаалагдсан.</p>
+</footer>
+</body>
+</html>
