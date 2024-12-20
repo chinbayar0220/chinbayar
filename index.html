@@ -25,7 +25,7 @@
             border-radius: 10px;
             padding: 20px;
             width: 80%;
-            max-width: 500px;
+            max-width: 600px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
@@ -45,9 +45,27 @@
             margin-bottom: 10px;
         }
 
+        .profile-info, .registered-info {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-info img {
+            width: 150px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+
+        .profile-info p {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
         form {
             display: flex;
             flex-direction: column;
+            align-items: center;
         }
 
         label {
@@ -60,6 +78,8 @@
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
+            width: 80%;
+            max-width: 350px;
         }
 
         button {
@@ -74,11 +94,6 @@
 
         button:hover {
             background-color: #e60073;
-        }
-
-        .registered-info {
-            margin-top: 20px;
-            text-align: center;
         }
 
         ul {
@@ -97,12 +112,23 @@
 </head>
 <body>
     <div class="container">
+        <!-- Таны мэдээлэл -->
         <header>
             <h1>Болзооны Вебсайт 💖</h1>
         </header>
 
+        <section class="profile-info">
+            <h2>Миний Профайл</h2>
+            <img src="https://chinbayar.bayanbat.com/tugsu.png" alt="Таны зураг">
+            <p><strong>Нэр:</strong> Таныхан Чимэг</p>
+            <p><strong>Нас:</strong> 25</p>
+            <p><strong>Мэргэжил:</strong> Вэб хөгжүүлэгч</p>
+            <p><strong>Instagram:</strong> <a href="https://instagram.com/ch_nbayr" target="_blank">@tanyhan</a></p>
+        </section>
+
+        <!-- Бүртгэлийн хэсэг -->
         <section class="profile">
-            <h2>Таны Профайл</h2>
+            <h2>Таны Профайл бүртгүүлэх</h2>
             <form id="profile-form">
                 <label for="name">Нэр:</label>
                 <input type="text" id="name" name="name" required>
@@ -120,6 +146,7 @@
             </form>
         </section>
 
+        <!-- Бүртгүүлсэн хүмүүсийн мэдээлэл -->
         <section class="registered-info">
             <h2>Бүртгүүлсэн хүмүүсийн мэдээлэл:</h2>
             <ul id="user-list"></ul>
@@ -128,6 +155,7 @@
     </div>
 
     <script>
+        // Бүртгэлийн мэдээллийг хадгалах функц
         document.getElementById('profile-form').addEventListener('submit', function (e) {
             e.preventDefault();
 
@@ -152,6 +180,7 @@
             alert('Бүртгэл амжилттай! 🎉');
         });
 
+        // Бүртгүүлсэн хүмүүсийн мэдээллийг харуулах функц
         document.getElementById('load-data').addEventListener('click', function () {
             const userList = JSON.parse(localStorage.getItem('users')) || [];
             const userListElement = document.getElementById('user-list');
