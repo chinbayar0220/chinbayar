@@ -113,6 +113,10 @@
             margin-bottom: 15px;
             text-align: center;
         }
+
+        .registered-info {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -199,6 +203,7 @@
             if (password === '0220') {
                 const userList = JSON.parse(localStorage.getItem('users')) || [];
                 const userListElement = document.getElementById('user-list');
+                const registeredInfoSection = document.querySelector('.registered-info');
                 userListElement.innerHTML = '';
 
                 userList.forEach(user => {
@@ -214,6 +219,9 @@
                 if (userList.length === 0) {
                     userListElement.innerHTML = '<li>Бүртгүүлсэн мэдээлэл байхгүй байна.</li>';
                 }
+
+                // Нууц үг зөв бол мэдээллийг харуулна
+                registeredInfoSection.style.display = 'block'; 
             } else {
                 alert('Нууц үг буруу байна!');
             }
