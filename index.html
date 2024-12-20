@@ -1,109 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Болзоо | Таны Нэр</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-        }
-        header {
-            background-color: #ff6b6b;
-            color: white;
-            text-align: center;
-            padding: 20px 0;
-        }
-        .profile {
-            text-align: center;
-            padding: 20px;
-        }
-        .profile img {
-            border-radius: 50%;
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            border: 4px solid #ff6b6b;
-        }
-        .profile h1 {
-            margin: 10px 0;
-            color: #333;
-        }
-        .profile p {
-            color: #666;
-            font-size: 1rem;
-        }
-        .profile a {
-            text-decoration: none;
-            color: #ff6b6b;
-            font-weight: bold;
-        }
-        .contact-form {
-            max-width: 500px;
-            margin: 20px auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        .contact-form input, .contact-form textarea, .contact-form button {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .contact-form button {
-            background-color: #ff6b6b;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        .contact-form button:hover {
-            background-color: #ff4a4a;
-        }
-        footer {
-            text-align: center;
-            padding: 10px 0;
-            margin-top: 20px;
-            background-color: #ddd;
-            color: #333;
-        }
-    </style>
-</head>
-<body>
+const express = require('express');
+const bodyParser = require('body-parser');
+const fs = require('fs');
 
-<header>
-    <h1>Болзоо | Таны Нэр</h1>
-</header>
+const app = express();
+const PORT = 3000;
 
-<div class="profile">
-    <img src="your-photo.jpg" alt="Таны зураг">
-    <h1>Таны Нэр</h1>
-    <p>Сайн уу! Би хөгжим, аялалд дуртай. Надтай танилцаарай!</p>
-    <p>
-        <a href="https://www.instagram.com/yourusername" target="_blank">
-            Миний Instagram: @yourusername
-        </a>
-    </p>
-</div>
+// Middleware for parsing JSON and form data
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-<div class="contact-form">
-    <h2>Холбогдох</h2>
-    <form action="/submit-message" method="POST">
-        <input type="text" name="name" placeholder="Таны нэр" required>
-        <input type="email" name="email" placeholder="Таны имэйл хаяг" required>
-        <textarea name="message" rows="4" placeholder="Танд хэлэх зүйлс..." required></textarea>
-        <button type="submit">Илгээх</button>
-    </form>
-</div>
+// Serve static files (e.g., HTML)
+app.use(express.static('public'));
 
-<footer>
-    <p>&copy; 2024 Таны Болзоо Веб. Бүх эрх хуулиар хамгаалагдсан.</p>
-</footer>
+// Endpoint for registration
+app.post('/register', (req, res) => {
+    const { name, about, age } = req.body;
 
-</body>
-</html>
+    // Create a new user object
+    const newUser = { name, about, age };
+
+    // Read existing users from a file
+    fs.readFile('users.json', 'utf-8', (err, data) => {
+        if (err && err.code !== 'ENOENT') {
+            console.error('Error reading file:', err);
+            return res.status(500).send('Internal server error.');
+        }
+
+        // Parse existing users or initialize as an empty array
+        const users = data ? JSON.parse(data) : [];
+        users.push(newUser);
+
+        // Save updated users to the file
+        fs.writeFile('users.json', JSON.stringify(users, null, 2), (err) => {
+            if (err) {
+                console.error('Error writing file:', err);
+                return res.status(500).send('Error saving user.');
+            }
+
+            res.send('Бүртгэл амжилттай хийгдлээ!');
+        });
+    });
+});
+
+// Start the server
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
