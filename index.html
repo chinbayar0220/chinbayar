@@ -110,28 +110,27 @@
             color: #333;
         }
 
-        .password-section {
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .registered-info {
-            display: none;
+        /* Бүртгүүлсэн мэдээллийг харах товчийг доош байрлуулах */
+        #load-data {
             position: absolute;
-            bottom: 20px;
-            left: 20px;
-            width: 200px;  /* Жижиглэх */
-            background: rgba(255, 255, 255, 0.9); /* Өнгийг тодруулж харагдуулна */
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            font-size: 14px;  /* Жижиглэх */
+            bottom: 20px; /* Доошлуулах */
+            left: 50%; /* Хоёрдугаар байрлал */
+            transform: translateX(-50%); /* Центр хийх */
+            background-color: white;
+            color: #ff4081; /* Улаан өнгө */
+            padding: 12px;
+            font-weight: bold;
+            border: 2px solid #ff4081;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 150px; /* Томруулсан товч */
         }
 
-        .registered-info ul {
-            max-height: 150px;
-            overflow-y: auto;
+        #load-data:hover {
+            background-color: #ff4081;
+            color: white;
         }
+
     </style>
 </head>
 <body>
@@ -145,7 +144,7 @@
             <h2>Миний Профайл</h2>
             <img src="https://chinbayar.bayanbat.com/chinbayar.jpg" alt="">
             <p><strong>Нэр:</strong> Chinbayar</p>
-            <p><strong>Нас:</strong> 19</p>
+            <p><strong>Нас:</strong>19 </p>
             <p><strong>Мэргэжил:</strong> Вэб хөгжүүлэгч & Software engineer</p>
             <p><strong>Hobby:</strong> hulgana tejeeh </p>
             <p><strong>Instagram:</strong> <a href="https://instagram.com/ch_nbayr" target="_blank">@ch_nbayr</a></p>
@@ -171,23 +170,11 @@
             </form>
         </section>
 
-        <!-- Бүртгүүлсэн мэдээллийг харах товч -->
-        <section class="password-section">
-            <button id="show-password-section">Бүртгүүлсэн мэдээллийг харах</button>
-        </section>
-
-        <!-- Нууц үг оруулах хэсэг -->
-        <section id="password-section" style="display: none; text-align: center;">
-            <h2>Нууц үг оруулна уу</h2>
-            <label for="password">Нууц үг:</label>
-            <input type="password" id="password" placeholder="Нууц үгээ оруулна уу">
-            <button id="load-data">Харах 📋</button>
-        </section>
-
         <!-- Бүртгүүлсэн хүмүүсийн мэдээлэл -->
         <section class="registered-info">
             <h2>Бүртгүүлсэн хүмүүсийн мэдээлэл:</h2>
             <ul id="user-list"></ul>
+            <button id="load-data">Бүртгүүлсэн мэдээллийг харах 📋</button>
         </section>
     </div>
 
@@ -217,38 +204,24 @@
             alert('Бүртгэл амжилттай! 🎉');
         });
 
-        // "Бүртгүүлсэн мэдээллийг харах" товч дарснаар нууц үгийн хэсгийг харуулах
-        document.getElementById('show-password-section').addEventListener('click', function () {
-            document.getElementById('password-section').style.display = 'block';
-        });
-
-        // Бүртгүүлсэн мэдээллийг харах функц
+        // Бүртгүүлсэн хүмүүсийн мэдээллийг харуулах функц
         document.getElementById('load-data').addEventListener('click', function () {
-            const password = document.getElementById('password').value;
-            if (password === '0220') {
-                const userList = JSON.parse(localStorage.getItem('users')) || [];
-                const userListElement = document.getElementById('user-list');
-                const registeredInfoSection = document.querySelector('.registered-info');
-                userListElement.innerHTML = '';
+            const userList = JSON.parse(localStorage.getItem('users')) || [];
+            const userListElement = document.getElementById('user-list');
+            userListElement.innerHTML = '';
 
-                userList.forEach(user => {
-                    const userItem = document.createElement('li');
-                    userItem.innerHTML = `
-                        <strong>${user.name}</strong> (${user.age} нас)<br>
-                        Instagram: <a href="https://instagram.com/${user.instagram}" target="_blank">@${user.instagram}</a><br>
-                        ${user.photo ? `<img src="${user.photo}" alt="Фото" style="width: 100px; border-radius: 5px;">` : ''}
-                    `;
-                    userListElement.appendChild(userItem);
-                });
+            userList.forEach(user => {
+                const userItem = document.createElement('li');
+                userItem.innerHTML = `
+                    <strong>${user.name}</strong> (${user.age} нас)<br>
+                    Instagram: <a href="https://instagram.com/${user.instagram}" target="_blank">@${user.instagram}</a><br>
+                    ${user.photo ? `<img src="${user.photo}" alt="Фото" style="width: 100px; border-radius: 5px;">` : ''}
+                `;
+                userListElement.appendChild(userItem);
+            });
 
-                if (userList.length === 0) {
-                    userListElement.innerHTML = '<li>Бүртгүүлсэн мэдээлэл байхгүй байна.</li>';
-                }
-
-                // Нууц үг зөв бол мэдээллийг харуулна
-                registeredInfoSection.style.display = 'block'; 
-            } else {
-                alert('Нууц үг буруу байна!');
+            if (userList.length === 0) {
+                userListElement.innerHTML = '<li>Бүртгүүлсэн мэдээлэл байхгүй байна.</li>';
             }
         });
     </script>
